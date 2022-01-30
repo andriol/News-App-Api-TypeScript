@@ -1,11 +1,14 @@
+import React from "react";
+
 export type News = {
   author: string;
   title: string;
   description: string;
   content: string;
-  url: string;
-  urlToImage: string;
-  source: string;
+  index: number;
+  // url: string;
+  // urlToImage: string;
+  // source: string;
 };
 
 export type NewsState = News & { article: string[] };
@@ -21,9 +24,5 @@ export const fetchNews = async (
     return data.articles.map((article: News) => ({
       ...article,
     }));
-  } else if (data.status === "error") {
-    return data.message;
-  } else {
-    return data;
-  }
+  } else return data.message;
 };

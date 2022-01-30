@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { fetchNews, NewsState } from "./components/api";
-
-function App() {
+import Card from "./components/card";
+import { News } from "./components/api";
+const App: React.FC = () => {
   const [news, setNews] = useState<NewsState[]>([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState<string>("");
   const [date, setDate] = useState<any | null>(new Date(2020, 1, 1));
-  const getNews = async (e: any) => {
+
+  const getNews = async (e: React.FormEvent) => {
     e.preventDefault();
     const articleNews = await fetchNews(input, date);
-
     setNews(articleNews);
-
-    console.log(articleNews);
-    console.log(news);
   };
 
   return (
@@ -29,20 +27,21 @@ function App() {
         />
         <button onClick={getNews}>Search</button>
       </form>
-      {news.map((article, index) => {
-        const { author, content, description, title, url, urlToImage, source } =
-          article;
+
+      {news.map((article: News) => {
+        const { author, content, description, title } = article;
         return (
-          <ul key={index}>
-            <li style={{ color: "blue" }}>Title: {title}</li>
-            <h4>Author: {author ? author : "no author provided"}</h4>
-            <p>Content: {content}</p>
-            <p>Description: {description}</p>
-          </ul>
+          <Card
+            index={Date.now()}
+            author={author}
+            content={content}
+            description={description}
+            title={title}
+          />
         );
       })}
     </div>
   );
-}
+};
 
 export default App;
