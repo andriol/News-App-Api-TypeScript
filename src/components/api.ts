@@ -6,9 +6,6 @@ export type News = {
   description: string;
   content: string;
   index: number;
-  // url: string;
-  // urlToImage: string;
-  // source: string;
 };
 
 export type NewsState = News & { article: string[] };
